@@ -41,9 +41,7 @@ public final void acquire(int arg) {
 三个线程同时进来，他们会首先会通过CAS去修改state的状态，如果修改成功，那么竞争成功，因此这个时候三个线程只有一个CAS成功，其他两个线程失败，也就是tryAcquire返回false。
 
 接下来，addWaiter会把将当前线程关联的EXCLUSIVE类型的节点入队列：
-
-代码：
-
+```java
 private Node addWaiter(Node mode) {
     Node node = new Node(Thread.currentThread(), mode);
     Node pred = tail;
@@ -57,13 +55,11 @@ private Node addWaiter(Node mode) {
     enq(node);
     return node;
 }
-
+```
 解读：
 
 如果队尾节点不为null，则说明队列中已经有线程在等待了，那么直接入队尾。对于我们举的例子，这边的逻辑应该是走enq，也就是开始队尾是null，其实这个时候整个队列都是null的。
-
-代码：
-
+```java
 private Node enq(final Node node) {
     for (;;) {
         Node t = tail;
@@ -79,7 +75,7 @@ private Node enq(final Node node) {
         }
     }
 }
-
+```
 解读：
 
 如果Thread2和Thread3同时进入了enq，同时t==null，则进行CAS操作对队列进行初始化，这个时候只有一个线程能够成功，然后他们继续进入循环，第二次都进入了else代码块，这个时候又要进行CAS操作，将自己放在队尾，因此这个时候又是只有一个线程成功，我们假设是Thread2成功，哈哈，Thread2开心的返回了，Thread3失落的再进行下一次的循环，最终入队列成功，返回自己。
@@ -103,9 +99,7 @@ private Node enq(final Node node) {
 锁释放-等待线程唤起
 
 我们来看看当Thread1这个时候终于做完了事情，调用了unlock准备释放锁，这个时候发生了什么。
-
-代码：
-
+```java
 public final boolean release(int arg) {
     if (tryRelease(arg)) {
         Node h = head;
@@ -115,7 +109,7 @@ public final boolean release(int arg) {
     }
     return false;
 }
-
+```
 解读：
 
 首先，Thread1会修改AQS的state状态，加入之前是1，则变为0，注意这个时候对于非公平锁来说是个很好的插入机会，举个例子，如果锁是公平锁，这个时候来了Thread4，那么这个锁将会被Thread4抢去。。。
