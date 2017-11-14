@@ -29,15 +29,13 @@ AQS的等待队列基于一个双向链表实现的，HEAD节点不关联线程�
 ### 1）入队列
 
 我们来看看，当这三个线程同时去竞争锁的时候发生了什么？
-
-代码：
-
+```java
 public final void acquire(int arg) {
     if (!tryAcquire(arg) &&
         acquireQueued(addWaiter(Node.EXCLUSIVE), arg))
         selfInterrupt();
 }
-
+```
 解读：
 
 三个线程同时进来，他们会首先会通过CAS去修改state的状态，如果修改成功，那么竞争成功，因此这个时候三个线程只有一个CAS成功，其他两个线程失败，也就是tryAcquire返回false。
