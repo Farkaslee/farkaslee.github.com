@@ -102,3 +102,7 @@ public class OngoingItemBuilderForkJoinTask implements Callable<List<OngoingInve
     }
 }
 ```
+
+
+可以参考这里的原理说明：
+http://www.infoq.com/cn/articles/fork-join-introduction
