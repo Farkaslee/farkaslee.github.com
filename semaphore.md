@@ -1,3 +1,4 @@
+### Semaphore
 
 Semaphore也是一个线程同步的辅助类，可以维护当前访问自身的线程个数，并提供了同步机制。使用Semaphore可以控制同时访问资源的线程个数，例如，实现一个文件允许的并发访问数。
 
@@ -10,8 +11,7 @@ Semaphore的主要方法摘要：
 　　int availablePermits():返回此信号量中当前可用的许可数。
 
 　　boolean hasQueuedThreads():查询是否有线程正在等待获取。
-  
-  package com.lu.alice.service.common;
+```java
 
 import java.util.ArrayList;
 import java.util.List;
@@ -99,3 +99,10 @@ public class SequenceService {
 	}
 }
 ```
+
+
+### Support or Contact
+
+Having trouble with Pages?
+
+lfl969605@126.com
