@@ -23,7 +23,6 @@ import org.springframework.stereotype.Service;
 
 import com.lu.alice.common.mapper.alice.SequenceMapper;
 import com.lufax.utility.log.Logger;
-```
 @Service
 public class SequenceService {
 	
