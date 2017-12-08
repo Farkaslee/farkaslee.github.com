@@ -79,3 +79,5 @@ public class ValidationService {
 	}
 }
 ```
+指导参考
+https://www.ibm.com/developerworks/cn/java/j-lo-jsr303/
