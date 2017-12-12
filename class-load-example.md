@@ -5,6 +5,7 @@
  * @author panteng
  *
  */
+ ```java
 public class StaticTest {
     /**第一个加载*/
     public static int k = 0;
@@ -93,3 +94,4 @@ public class StaticTest {
     }
  
 }
+```
