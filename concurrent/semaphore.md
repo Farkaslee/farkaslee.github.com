@@ -12,17 +12,6 @@ Semaphore的主要方法摘要：
 
 　　boolean hasQueuedThreads():查询是否有线程正在等待获取。
 ```java
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.concurrent.ConcurrentLinkedDeque;
-import java.util.concurrent.Semaphore;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
-import com.lu.alice.common.mapper.alice.SequenceMapper;
-import com.lufax.utility.log.Logger;
 @Service
 public class SequenceService {
 	
