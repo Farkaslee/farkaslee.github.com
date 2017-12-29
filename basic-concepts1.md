@@ -1,13 +1,13 @@
 ## Java中的equals和hashCode
 
-	equals()和hashCode()方法是用来在同一类中做比较用的，尤其是在容器里如set存放同一类对象时用来判断放入的对象是否重复。
+equals()和hashCode()方法是用来在同一类中做比较用的，尤其是在容器里如set存放同一类对象时用来判断放入的对象是否重复。
 
-	这里我们首先要明白一个问题：
-	equals()相等的两个对象，hashcode()一定相等，equals()不相等的两个对象，却并不能证明他们的hashcode()不相等。换句话说，equals()方法不相等的两个对象，hashCode()有可能相等。
+这里我们首先要明白一个问题：
+equals()相等的两个对象，hashcode()一定相等，equals()不相等的两个对象，却并不能证明他们的hashcode()不相等。换句话说，equals()方法不相等的两个对象，hashCode()有可能相等。
 	  
-	在这里hashCode就好比字典里每个字的索引，equals()好比比较的是字典里同一个字下的不同词语。就好像在字典里查“自”这个字下的两个词语“自己”、“自发”，如果用equals()判断查询的词语相等那么就是同一个词语，比如equals()比较的两个词语都是“自己”，那么此时hashCode()方法得到的值也肯定相等；如果用equals()方法比较的是“自己”和“自发”这两个词语，那么得到结果是不想等，但是这两个词都属于“自”这个字下的词语所以在查索引时相同，即：hashCode()相同。如果用equals()比较的是“自己”和“他们”这两个词语的话那么得到的结果也是不同的，此时hashCode() 得到也是不同的
+在这里hashCode就好比字典里每个字的索引，equals()好比比较的是字典里同一个字下的不同词语。就好像在字典里查“自”这个字下的两个词语“自己”、“自发”，如果用equals()判断查询的词语相等那么就是同一个词语，比如equals()比较的两个词语都是“自己”，那么此时hashCode()方法得到的值也肯定相等；如果用equals()方法比较的是“自己”和“自发”这两个词语，那么得到结果是不想等，但是这两个词都属于“自”这个字下的词语所以在查索引时相同，即：hashCode()相同。如果用equals()比较的是“自己”和“他们”这两个词语的话那么得到的结果也是不同的，此时hashCode() 得到也是不同的
        
-	反过来：hashcode()不等，一定能推出equals()也不等；hashcode()相等，equals()可能相等，也可能不等。在object类中，hashcode()方法是本地方法，返回的是对象的地址值，而object类中的equals()方法比较的也是两个对象的地址值，如果equals()相等，说明两个对象地址值也相等，当然hashcode() 也就相等了.
+反过来：hashcode()不等，一定能推出equals()也不等；hashcode()相等，equals()可能相等，也可能不等。在object类中，hashcode()方法是本地方法，返回的是对象的地址值，而object类中的equals()方法比较的也是两个对象的地址值，如果equals()相等，说明两个对象地址值也相等，当然hashcode() 也就相等了.
      
 
 官方注释解释：   
@@ -16,11 +16,11 @@
 以下情况不 是必需的：如果根据 equals(java.lang.Object) 方法，两个对象不相等，那么在两个对象中的任一对象上调用 hashCode 方法必定会生成不同的整数结果。但是，程序员应该知道，为不相等的对象生成不同整数结果可以提高哈希表的性能。     
 实际上，由 Object 类定义的 hashCode 方法确实会针对不同的对象返回不同的整数。（这一般是通过将该对象的内部地址转换成一个整数来实现的，但是 JavaTM 编程语言不需要这种实现技巧。）     
 
-    当equals方法被重写时，通常有必要重写 hashCode 方法，以维护 hashCode 方法的常规协定，该协定声明相等对象必须具有相等的哈希码。
+当equals方法被重写时，通常有必要重写 hashCode 方法，以维护 hashCode 方法的常规协定，该协定声明相等对象必须具有相等的哈希码。
 
-    实际中这在项目中经常被用到，下面是本人所经历的项目中的一个例子，
+实际中这在项目中经常被用到，下面是本人所经历的项目中的一个例子，
 
-java```
+```java
 @Service
 public class HandlerRegistry {
 	
@@ -98,5 +98,6 @@ class MapKeyPair<V, K> {
 	}
 }
 ```
-
+在这段程序中因为MapKeyPair<K,V> 需要作为map的key，所以在class内 我们重写了MapKeyPair的hashcode 和 equals 方法，把MapKeyPair类内的两个成员变量
+tradeType 和 handlerType 作为判断equals和hashcode相等的依据。
 
