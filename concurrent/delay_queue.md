@@ -1,4 +1,4 @@
-
+```java
 @Service
 public class DelayQueueService implements InitializingBean {
 
@@ -80,3 +80,4 @@ public class DelayQueueService implements InitializingBean {
 	}
 
 }
+```java
