@@ -81,3 +81,35 @@ public class DelayQueueService implements InitializingBean {
 
 }
 ```java
+package com.lu.alice.support.messaging.delay;
+
+import java.util.concurrent.Delayed;
+import java.util.concurrent.TimeUnit;
+
+public class DelayMessage<T> implements Delayed {
+
+	private T message;
+
+	private long expireAt;
+
+	public DelayMessage(T message, long expireAt) {
+		this.message = message;
+		this.expireAt = expireAt;
+	}
+
+	@Override
+	public int compareTo(Delayed o) {
+		return 0;
+	}
+
+	@Override
+	public long getDelay(TimeUnit unit) {
+		return unit.convert(this.expireAt - System.currentTimeMillis(), TimeUnit.MILLISECONDS);
+	}
+
+	public T getMessage() {
+		return message;
+	}
+
+}
+```
