@@ -16,11 +16,13 @@ Condition实现生产者、消费者模式：
 
 java```
 public class ConTest {
+
     private int queueSize = 10;
     private PriorityQueue<Integer> queue = new PriorityQueue<>(queueSize);
     private Lock lock = new ReentrantLock();
     private Condition notFull = lock.newCondition();
     private Condition notEmpty = lock.newCondition();
+    
     public static void main(String[] args) throws InterruptedException  {
         ConTest test = new ConTest();
         Producer producer = test.new Producer();
@@ -31,6 +33,7 @@ public class ConTest {
         producer.interrupt();
         consumer.interrupt();
     }
+    
     class Consumer extends Thread{
         @Override
         public void run() {
@@ -58,6 +61,7 @@ public class ConTest {
             }
         }
     }
+    
     class Producer extends Thread{
         @Override
         public void run() {
