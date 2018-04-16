@@ -14,7 +14,7 @@ Condition是一个多线程间协调通信的工具类，使得某个，或者�
 
 Condition实现生产者、消费者模式：
 
-java```
+```java
 
 public class ConTest {
 
@@ -93,4 +93,4 @@ public class ConTest {
     }
 }
 
-java```
+```
