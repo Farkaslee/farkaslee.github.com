@@ -1,0 +1,8 @@
+flutter 备忘
+创建项目：flutter create ***
+统计应用启动时间:flutter run --trace-startup --profile
+分析应用程序代码：flutter analyze
+运行应用程序：flutter run
+协议检查：flutter doctor --android-licenses
+更新包：flutter packages get 
+运行前检查模拟器是否存在：flutter emulator
