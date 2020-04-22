@@ -16,81 +16,56 @@ Condition实现生产者、消费者模式：
 
 ```java
 
-public class ConTest {
 
+public class Test {
     private int queueSize = 10;
-    private PriorityQueue<Integer> queue = new PriorityQueue<>(queueSize);
-    private Lock lock = new ReentrantLock();
-    private Condition notFull = lock.newCondition();
-    private Condition notEmpty = lock.newCondition();
-    
-    public static void main(String[] args) throws InterruptedException  {
-        ConTest test = new ConTest();
+    private ArrayBlockingQueue<Integer> queue = new ArrayBlockingQueue<Integer>(queueSize);
+
+    public static void main(String[] args)  {
+        Test test = new Test();
         Producer producer = test.new Producer();
         Consumer consumer = test.new Consumer();
+
         producer.start();
         consumer.start();
-        Thread.sleep(0);
-        producer.interrupt();
-        consumer.interrupt();
     }
-    
+
     class Consumer extends Thread{
+
         @Override
         public void run() {
             consume();
         }
-        volatile boolean flag=true;
+
         private void consume() {
-            while(flag){
-                lock.lock();
+            while(true){
                 try {
-                    while(queue.isEmpty()){
-                        try {
-                            System.out.println("队列空，等待数据");
-                            notEmpty.await();
-                        } catch (InterruptedException e) {
-                            flag =false;
-                        }
-                    }
-                    queue.poll();                //每次移走队首元素
-                    notFull.signal();
+                    queue.take();
                     System.out.println("从队列取走一个元素，队列剩余"+queue.size()+"个元素");
-                } finally{
-                    lock.unlock();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
                 }
             }
         }
     }
-    
+
     class Producer extends Thread{
+
         @Override
         public void run() {
             produce();
         }
-        volatile boolean flag=true;
-        private void produce() {
-            while(flag){
-                lock.lock();
-                try {
-                    while(queue.size() == queueSize){
-                        try {
-                            System.out.println("队列满，等待有空余空间");
-                            notFull.await();
-                        } catch (InterruptedException e) {
 
-                            flag =false;
-                        }
-                    }
-                    queue.offer(1);        //每次插入一个元素
-                    notEmpty.signal();
+        private void produce() {
+            while(true){
+                try {
+                    queue.put(1);
                     System.out.println("向队列取中插入一个元素，队列剩余空间："+(queueSize-queue.size()));
-                } finally{
-                    lock.unlock();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
                 }
             }
         }
     }
 }
-
 ```
