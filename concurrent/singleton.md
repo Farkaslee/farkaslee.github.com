@@ -1,3 +1,4 @@
+```java
 public class ParserRegistrySingleton {
 
   
@@ -12,3 +13,5 @@ public class ParserRegistrySingleton {
 
 
 }
+
+```
